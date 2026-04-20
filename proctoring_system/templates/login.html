@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,3 +28,34 @@
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <img src="{{ url_for('static', filename='img/logo_sin_fon.png') }}">
+    <h2>Control de Evaluación Médica</h2>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h2>Iniciar sesión</h2>
+
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Usuario" required>
+            <input type="password" name="contraseña" placeholder="Contraseña" required>
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <a href="/register">Crear cuenta</a>
+    </div>
+</div>
+
+</body>
+</html>
+>>>>>>> 01a3daeec870760731c79ef743895bb1ab168f97

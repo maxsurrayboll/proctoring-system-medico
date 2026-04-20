@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ------------------ FUNCIÓN ALERTA ------------------
 function showAlert(msg) {
     const alerta = document.getElementById("alerta");
@@ -104,3 +105,12 @@ function sendEvent(type) {
         console.error("Error enviando evento:", err);
     });
 }
+=======
+navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+.then(stream => {
+    document.getElementById("video").srcObject = stream;
+})
+.catch(error => {
+    console.log("Error al acceder a la cámara", error);
+});
+>>>>>>> 01a3daeec870760731c79ef743895bb1ab168f97
