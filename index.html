@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CODEM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo-container">
+        <img src="imj/lg.png" class="logo">
+        <span class="brand">CODEM</span>
+    </div>
+</header>
+
+<div class="card" id="loginCard">
+    <h2>Iniciar Sesión</h2>
+
+    <input type="text" id="loginUser" placeholder="Usuario o Email">
+    <input type="password" id="loginPass" placeholder="Contraseña">
+
+    <button onclick="login()">Entrar</button>
+
+    <p class="switch">
+        ¿No tienes cuenta?
+        <span onclick="showRegister()">Regístrate</span>
+    </p>
+
+    <p id="loginMsg" class="message"></p>
+</div>
+
+<div class="card" id="registerCard" style="display:none;">
+    <h2>Crear Cuenta</h2>
+
+    <input type="text" id="regName" placeholder="Nombre completo">
+    <input type="text" id="regEmail" placeholder="Correo electrónico">
+    <input type="password" id="regPass" placeholder="Contraseña">
+
+    <button onclick="register()">Registrar</button>
+
+    <p class="switch">
+        <span onclick="showLogin()">Volver</span>
+    </p>
+
+    <p id="registerMsg"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

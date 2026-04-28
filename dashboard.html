@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CODEM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<div class="sidebar">
+
+    <div class="sidebar-logo">
+        <img src="img/lg.png" class="logo">
+        <h3>CODEM</h3>
+    </div>
+
+    <!-- 👇 NUEVO INDICADOR -->
+    <p class="user-label">👤 Usuario</p>
+    <p id="userName">-</p>
+
+    <div class="menu">
+
+        <!-- ❌ se eliminó "Inicio" -->
+
+        <p>📄 Pruebas asignadas</p>
+        <p>🕓 Pruebas previas</p>
+        <p>🚨 Reportes de fraude</p>
+        <p>⚠️ Aviso de deserción</p>
+        <p onclick="logout()">🚪 Cerrar sesión</p>
+
+    </div>
+
+</div>
+
+    <div class="content" id="contentArea">
+        <h2>Bienvenido a CODEM</h2>
+    </div>
+
+</div>
+
+<script>
+let user = JSON.parse(localStorage.getItem("activeUser"));
+
+if(!user) window.location="index.html";
+
+document.getElementById("userName").textContent=user.name;
+
+/* 🏠 HOME */
+function home(){
+    document.getElementById("contentArea").innerHTML=
+    "<h2>Bienvenido a CODEM</h2>";
+}
+
+/* 📄 ASIGNADAS (RESTAURADO) */
+function assigned(){
+    let u = JSON.parse(localStorage.getItem(user.email)) || user;
+
+    let list = (u.assignedTests||[]).join(", ") || "No hay pruebas asignadas";
+
+    document.getElementById("contentArea").innerHTML=
+    "<h2>Pruebas asignadas</h2><p>"+list+"</p>";
+}
+
+/* 🕓 PREVIAS (RESTAURADO) */
+function prev(){
+    let u = JSON.parse(localStorage.getItem(user.email)) || user;
+
+    let list = (u.prevTests||[]).join(", ") || "Sin pruebas previas";
+
+    document.getElementById("contentArea").innerHTML=
+    "<h2>Pruebas previas</h2><p>"+list+"</p>";
+}
+
+/* 🚨 FRAUDES */
+function frauds(){
+    let u = JSON.parse(localStorage.getItem(user.email)) || user;
+
+    document.getElementById("contentArea").innerHTML=
+    "<h2>Fraudes</h2><p>Total: "+(u.frauds||0)+"</p>";
+}
+
+/* ⚠️ DESERCIÓN */
+function dropout(){
+    let u = JSON.parse(localStorage.getItem(user.email)) || user;
+
+    let msg = (u.frauds>=4)
+    ?"⚠️ Riesgo de deserción"
+    :"Sin riesgo";
+
+    document.getElementById("contentArea").innerHTML=
+    "<h2>Deserción</h2><p>"+msg+"</p>";
+}
+
+/* 🚪 LOGOUT */
+function logout(){
+    localStorage.clear();
+    window.location="index.html";
+}
+</script>
+
+</body>
+</html>

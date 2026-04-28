@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ADMIN CODEM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="img/lg.png" class="logo">
+            <h3>ADMIN CODEM</h3>
+        </div>
+
+        <div class="menu">
+            <p onclick="loadUsers()">👥 Usuarios</p>
+            <p onclick="logout()">🚪 Cerrar sesión</p>
+        </div>
+
+    </div>
+
+    <div class="content" id="adminContent">
+        <h2>Admin Panel</h2>
+    </div>
+
+</div>
+
+<script>
+if(localStorage.getItem("role")!=="admin"){
+    window.location="index.html";
+}
+
+/* USUARIOS */
+function loadUsers(){
+    let c=document.getElementById("adminContent");
+    c.innerHTML="<h2>Usuarios</h2>";
+
+    // Iterar sobre localStorage buscando usuarios
+    for(let i=0; i<localStorage.length; i++){
+        let key = localStorage.key(i);
+        
+        // Ignorar claves especiales como "role" y "activeUser"
+        if(key === "role" || key === "activeUser") continue;
+        
+        try{
+            let u=JSON.parse(localStorage.getItem(key));
+            
+            // Verificar que sea un objeto usuario válido
+            if(u && u.email){
+                c.innerHTML+=`
+                <div style="background:#1e293b;color:white;padding:10px;margin:10px;">
+                    <p><strong>Nombre:</strong> ${u.name}</p>
+                    <p><strong>Email:</strong> ${u.email}</p>
+                    <p><strong>Fraudes:</strong> ${u.frauds||0}</p>
+                    <p><strong>Pruebas asignadas:</strong> ${(u.assignedTests||[]).length}</p>
+                    <p><strong>Pruebas previas:</strong> ${(u.prevTests||[]).length}</p>
+
+                    <button onclick="addTest('${key}')">+ Prueba</button>
+                    <button onclick="addFraud('${key}')">+ Fraude</button>
+                    <button onclick="del('${key}')">Eliminar</button>
+                </div>`;
+            }
+        }catch(e){
+            // Ignorar errores de parseo
+        }
+    }
+}
+
+/* ➕ PRUEBAS */
+function addTest(email){
+    let u=JSON.parse(localStorage.getItem(email));
+    
+    // Inicializar arrays si no existen
+    if(!u.assignedTests) u.assignedTests = [];
+    
+    let test="Prueba "+(u.assignedTests.length+1);
+    u.assignedTests.push(test);
+    
+    localStorage.setItem(email, JSON.stringify(u));
+    alert("Prueba asignada");
+    loadUsers(); // Recargar la lista
+}
+
+/* FRAUDES */
+function addFraud(email){
+    let u=JSON.parse(localStorage.getItem(email));
+    u.frauds=(u.frauds||0)+1;
+    localStorage.setItem(email, JSON.stringify(u));
+    loadUsers(); // Recargar la lista
+}
+
+/* ELIMINAR */
+function del(email){
+    localStorage.removeItem(email);
+    loadUsers(); // Recargar la lista
+}
+
+/* LOGOUT */
+function logout(){
+    localStorage.clear();
+    window.location="index.html";
+}
+
+// Cargar usuarios al iniciar la página
+window.onload = function() {
+    loadUsers();
+};
+</script>
+
+</body>
+</html>
